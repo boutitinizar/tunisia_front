@@ -1,0 +1,66 @@
+ 
+ @font-face {
+    font-family: Roboto-Regular;
+    src: url('./fonts/roboto/Roboto-Regular.ttf'); 
+  }
+  
+  @font-face {
+    font-family: Roboto-Medium;
+    src: url('./fonts/roboto/Roboto-Medium.ttf'); 
+  }
+  
+  @font-face {
+    font-family: Roboto-Bold;
+    src: url('./fonts/roboto/Roboto-Bold.ttf'); 
+  }
+  
+ .header_bg{
+    background: -webkit-linear-gradient(left, rgb(38, 6, 51) 0%, rgb(236, 97, 93) 100%);
+    color: #fff;
+}
+
+
+h1 {
+    font-family: Roboto-Bold;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.4;
+    
+  }
+  
+  * {
+    font-family: Roboto-Regular;
+
+  }
+  
+  a{
+      color: #000;
+  }
+ .navbar-brand{
+    font-family: Roboto-Bold;
+    font-size: 20px;
+    color: #fff;
+    line-height: 1.4;
+ }
+
+ .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: rgb(52, 58, 64);
+    border-color: rgb(52, 58, 64);
+}
+
+
+element.style {
+}
+.page-link {
+    color: #000;
+}
+
+
+#data-table.table-hover tbody tr:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color:rgb(52, 58, 64,0.6) !important ;
+}
+ 

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> </title>
+   
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"  >
+          <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css"  ></head>  
+          <link rel="stylesheet" href="style.css"  ></head>  
+          <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+     <body>  
+     <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+           <a class="navbar-brand" href="#">CREATIVE TUNISIA</a>
+     </nav>
+          
+      <div class="jumbotron header_bg">
+        <div class="container">
+          <h1 class="display-3">Annuaire des associations </h1>
+          <p>Les associations opérationnelles en Tunisie.</p>
+          <form>
+               <div class="row">
+
+          <div class="col-md-2">
+               <div class="form-group">
+                    <label for="gouvernorat"><strong>Gouvernorat</strong></label>
+                    <select class="form-control" id="gouvernorat">
+                      <option value="">Tous</option>
+                    </select>
+                  </div>
+          </div>
+          <div class="col-md-3">
+               <div class="form-group">
+                    <label for="exampleFormControlSelect1"><strong>Spécialisation dans l'artisanat</strong></label>
+                    <select class="form-control" id="specialite">
+                      <option value="">Tous</option>
+                    </select>
+                  </div>
+          </div>
+          <div class="col-md-3">
+               <div class="form-group">
+                    <label for="exampleFormControlSelect1"><strong>Type d'appui accordé</strong></label>
+                    <select class="form-control" id="type_act">
+                         <option value="">Tous</option>
+                    </select>
+                  </div>
+          </div>
+          <div class="col-md-4">
+               <div class="form-group">
+                    <label for="exampleFormControlSelect1"><strong>Domaines de compétences de l'ogranisation</strong></label>
+                    <select class="form-control" id="domaine_inter">
+                         <option value="">Tous</option>
+                    </select>
+                  </div>
+          </div>
+     </div>
+               </form>
+
+     
+     </div>
+      </div>
+         <div class="container mb-5 mt-3">  
+               <table id="data-table" class="table table-bordered table-striped table-hover">  
+                    <thead class="thead-dark">  
+                         <tr>  
+                              <th>id</th>
+                              <th style="width: 45%" >Nom de l'association </th>  
+                              <th>Gouvernorat</th>  
+                              <th>Spécialisation dans l'artisanat</th>  
+                              <th>Type d'appui accordé</th>  
+                              <th>Domaines de compétences de l'ogranisation</th>  
+                           
+
+                         </tr>  
+                    </thead>  
+                    <tfoot class="thead-dark">  
+                         <tr>  <th>id</th>
+                              <th>Nom de l'association </th>  
+                              <th>Gouvernorat</th>  
+                              <th>Spécialisation dans l'artisanat	                              </th>  
+                              <th>Type d'appui accordé</th>  
+                              <th>Domaines de compétences de l'ogranisation</th>  
+                         </tr>  
+                    </tfoot> 
+               </table>  
+          </div>  
+          <footer class="footer mt-auto py-3 bg-dark mt-5">
+            <div class="container-fluid">
+              <span class="text-muted text-left">© 2020 Creative Tunisia.</span>
+     
+            </div>
+          </footer>
+     </body>  
+</html>  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"  ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"   ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"  ></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"  ></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"  ></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>  
+$(document).ready(function(){ 
+
+ 
+     const odoo_api_url = "http://admin.anata.tn/"
+    
+     $('.form-control').select2();
+
+     var table = $('#data-table').dataTable({  
+          "ajax"     :     odoo_api_url+"api/assocations",
+          "columns"     :     [  
+          { "data": 'id', 'visible': false},  
+               {
+                    "data":"name",
+                    },  
+               {
+                    "data":"gouvernorat",  
+               },
+               {
+                    "data":"specialite",  
+               },
+               {
+                    "data":"type",  
+               },
+               {
+                    "data":"domaine",  
+               } 
+          ],
+          "language": {
+               "url": "//cdn.datatables.net/plug-ins/1.10.21/i18n/French.json"
+          }
+     }); 
+
+     $('#gouvernorat').on('change', function () {
+          table.api().columns(2).search( this.value ).draw();
+     } );
+
+     $('#specialite').on('change', function () {
+          table.api().columns(3).search( this.value ).draw();
+     } );
+
+     $('#type_act').on('change', function () {
+          table.api().columns(4).search( this.value ).draw();
+     } );
+
+     $('#domaine_inter').on('change', function () {
+          table.api().columns(5).search( this.value ).draw();
+     } );
+
+     $.getJSON(odoo_api_url+"api/gouvernorat", function(data){ 
+          var select = $("#gouvernorat"); 
+          $.each(data.data, function(index, array) {  
+               select.append('<option value="' + array.name +'">' + array.name + '</option>');        
+          }); 
+     });
+
+     $.getJSON(odoo_api_url+"api/specialite", function(data){ 
+          var select = $("#specialite"); 
+          $.each(data.data, function(index, array) {  
+               select.append('<option value="' + array.name +'">' + array.name + '</option>');        
+          }); 
+     });
+
+     $.getJSON(odoo_api_url+"api/type", function(data){ 
+          var select = $("#type_act"); 
+          $.each(data.data, function(index, array) {  
+               select.append('<option value="' + array.name +'">' + array.name + '</option>');        
+          }); 
+     });
+
+     $.getJSON(odoo_api_url+"api/domaine", function(data){ 
+         
+          var select = $("#domaine_inter"); 
+          $.each(data.data, function(index, array) {  
+               select.append('<option value="' + array.name +'">' + array.name + '</option>');        
+          });
+     });
+
+     $('#data-table').on('click','td', function () {
+          var aPos = table.fnGetPosition(this);
+          var aData = table.fnGetData(aPos[0]);
+          window.location.href =  "./association.html?id="+aData.id;
+     });
+});  
+</script> 
